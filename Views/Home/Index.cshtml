@@ -23,8 +23,7 @@
                     <p class="card-text">Have something to sell? Create a new post to reach potential buyers.</p>
                     @if (Context.Session.GetString("UserEmail") != null)
                     {
-                        <a class="btn btn-primary">Create Post</a>
-                        @* <a href="@Url.Action("Create", "Post")" class="btn btn-primary">Create Post</a> *@
+                        <a href="@Url.Action("NewPost", "Post")" class="btn btn-primary">Create Post</a>
                     }
                     else
                     {

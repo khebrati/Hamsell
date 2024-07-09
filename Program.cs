@@ -1,4 +1,5 @@
 using Hamsell.Data;
+using Hamsell.Data.Repositories.Post;
 using Hamsell.Data.Repositories.User;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,8 @@ builder.Services.AddSingleton<DbContext>(serviceProvider =>
 });
 builder.Services.AddTransient<UserRepository>(
     serviceProvider => new UserRepository(serviceProvider.GetService<DbContext>()));
+builder.Services.AddTransient<PostRepository>(
+    serviceProvider => new PostRepository(serviceProvider.GetService<DbContext>()));
 
 
 var app = builder.Build();

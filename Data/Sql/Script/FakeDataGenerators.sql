@@ -90,23 +90,19 @@ VALUES
 (26, 5, 3, 5, 'Post Title 26', 'Post Description 26', 600, '2022-01-26', 2);
 
 
--- Insert fake data into Province
+
 INSERT INTO Hamsell.Province (ProvinceId, ProvinceName)
-VALUES (1, 'Province1'),
-    (2, 'Province2'),
-    (3, 'Province3'),
-    (4, 'Province4'),
-    (5, 'Province5');
+VALUES (1, 'Tehran'),
+    (2, 'Khorasan'),
+    (3, 'Yazd');
 
--- Insert fake data into City
+
 INSERT INTO Hamsell.City (CityId, CityName, ProvinceId)
-VALUES (1, 'City1', 1),
-    (2, 'City2', 2),
-    (3, 'City3', 3),
-    (4, 'City4', 4),
-    (5, 'City5', 5);
+VALUES (1, 'Tehran', 1),
+    (2, 'Mashhad', 2),
+    (3, 'Yazd', 3);
 
--- Insert fake data into BusinessCategory
+
 INSERT INTO Hamsell.BusinessCategory (BusinessCategoryId, BusinessCategoryName)
 VALUES (1, 'BusinessCategory1'),
     (2, 'BusinessCategory2'),

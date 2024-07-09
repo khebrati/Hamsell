@@ -20,7 +20,6 @@ public class UserController : Controller
 
     public IActionResult SignUp()
     {
-        // _userRepository.GetUser(1);
         return View();
     }
 
@@ -51,6 +50,8 @@ public class UserController : Controller
 
                 _userRepository.AddUser(user);
                 
+                HttpContext.Session.SetString("UserEmail", model.EmailAddress);
+                HttpContext.Session.SetInt32("UserId", user.AccountId);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)

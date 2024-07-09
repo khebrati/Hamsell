@@ -30,8 +30,17 @@ public class UserRepository
 
     public void AddUser(Models.User user)
     {
-        string query =
-            $"INSERT INTO User (AccountId, CityId, UserStatusId) VALUES ({user.AccountId}, {user.CityId}, {user.UserStatusId})";
+        string query;
+        if (user.CityId.HasValue)
+        {
+            query =
+                $"INSERT INTO User (AccountId, CityId, UserStatusId) VALUES ({user.AccountId}, {user.CityId}, {user.UserStatusId})";
+        }
+        else
+        {
+            query = $"INSERT INTO User (AccountId, UserStatusId) VALUES ({user.AccountId}, {user.UserStatusId})";
+        }
+
         var cmd = new MySqlCommand(query, _context.Connection);
         cmd.ExecuteNonQuery();
     }

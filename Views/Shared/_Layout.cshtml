@@ -22,9 +22,20 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUp">SignUp</a>
-                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    @if (Context.Session.GetString("UserEmail") != null)
+                    {
+                        <li class="nav-item">
+                            <span class="nav-link text-dark">Welcome, @Context.Session.GetString("UserEmail")</span>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="SignUp">Sign up</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

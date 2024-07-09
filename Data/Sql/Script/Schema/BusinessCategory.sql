@@ -1,4 +1,4 @@
 create table Hamsell.BusinessCategory (
-BusinessCategoryId integer primary key,
+BusinessCategoryId integer AUTO_INCREMENT primary key,
 BusinessCategoryName varchar(100) not null
 );

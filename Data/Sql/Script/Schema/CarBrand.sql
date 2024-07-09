@@ -1,4 +1,4 @@
 create table Hamsell.CarBrand(
-CarBrandId integer primary key,
+CarBrandId integer AUTO_INCREMENT primary key,
 CarBrandName varchar(100) not null
 );

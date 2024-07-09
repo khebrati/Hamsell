@@ -19,11 +19,11 @@ BEGIN
     SELECT AccountId INTO var FROM Hamsell.Account WHERE Hamsell.Account.EmailAddress = EmailAddress;
     SELECT Hamsell.User.*, Hamsell.Account.*
     FROM Hamsell.User
-    INNER JOIN Hamsell.Account ON Hamsell.User.AcountID = Hamsell.Account.AcountID
-    INNER JOIN Hamsell.Post ON Hamsell.User.AcountID = Hamsell.Post.UserId
+    INNER JOIN Hamsell.Account ON Hamsell.User.AccountID = Hamsell.Account.AccountId
+    INNER JOIN Hamsell.Post ON Hamsell.User.AccountID = Hamsell.Post.UserId
     INNER JOIN Hamsell.PostModeration ON Hamsell.Post.PostID = Hamsell.PostModeration.PostID
     WHERE Hamsell.PostModeration.AdminId = var AND Hamsell.Post.PostStatusId = 3
-    GROUP BY Hamsell.User.AcountID;
+    GROUP BY Hamsell.User.AccountID;
 END //
 DELIMITER ;
 
@@ -36,8 +36,8 @@ CREATE PROCEDURE SearchPostsByString(IN search_string VARCHAR(255))
 BEGIN
     SELECT P.PostID, P.title, P.PostDescription, A.FirstName, A.LastName
     FROM Hamsell.Post AS P
-    INNER JOIN Hamsell.User AS U ON P.UserId = U.AcountId
-    INNER JOIN Hamsell.Account AS A ON U.AcountId = A.AcountId
+    INNER JOIN Hamsell.User AS U ON P.UserId = U.AccountID
+    INNER JOIN Hamsell.Account AS A ON U.AccountID = A.AccountId
     WHERE P.title LIKE CONCAT('%', search_string, '%')
     OR P.PostDescription LIKE CONCAT('%', search_string, '%')
     OR A.FirstName LIKE CONCAT('%', search_string, '%')
@@ -51,14 +51,14 @@ BEGIN
     DECLARE var INT;
     DECLARE cityID INT;
     IF EmailOrPhone LIKE '%@%' THEN
-        SELECT AcountID INTO var FROM Hamsell.Account WHERE EmailAddress = EmailOrPhone;
+        SELECT AccountId INTO var FROM Hamsell.Account WHERE EmailAddress = EmailOrPhone;
     ELSE
-        SELECT AcountID INTO var FROM Hamsell.Account WHERE PhoneNumber = EmailOrPhone;
+        SELECT AccountId INTO var FROM Hamsell.Account WHERE PhoneNumber = EmailOrPhone;
     END IF;
-    SELECT CityID INTO cityID FROM Hamsell.User WHERE AcountID = var;
+    SELECT CityID INTO cityID FROM Hamsell.User WHERE AccountID = var;
     SELECT Hamsell.User.*, Hamsell.Account.* 
     FROM Hamsell.User
-    INNER JOIN Hamsell.Account ON Hamsell.User.AcountID = Hamsell.Account.AcountID
+    INNER JOIN Hamsell.Account ON Hamsell.User.AccountID = Hamsell.Account.AccountId
     WHERE Hamsell.User.CityID = cityID;
 END //
 DELIMITER ;
@@ -68,8 +68,8 @@ CREATE PROCEDURE GetTopNUsersByPostCount(IN dateParam DATETIME, IN N INT)
 BEGIN
     SELECT Hamsell.Account.FirstName, Hamsell.Account.LastName, COUNT(Hamsell.Post.PostID) AS PostCount
     FROM Hamsell.Post
-    INNER JOIN Hamsell.User ON Hamsell.Post.UserId = Hamsell.User.AcountID
-    INNER JOIN Hamsell.Account ON Hamsell.User.AcountID = Hamsell.Account.AcountID
+    INNER JOIN Hamsell.User ON Hamsell.Post.UserId = Hamsell.User.AccountID
+    INNER JOIN Hamsell.Account ON Hamsell.User.AccountID = Hamsell.Account.AccountId
     WHERE Hamsell.Post.CreationDate >= dateParam
     GROUP BY Hamsell.Account.FirstName, Hamsell.Account.LastName
     ORDER BY PostCount DESC

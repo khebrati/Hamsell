@@ -1,6 +1,6 @@
 -- values: Phone,Car, House, Electronics, Housing.
 create table Hamsell.PostCategory(
-PostCategoryId integer primary key,
+PostCategoryId integer AUTO_INCREMENT primary key,
 PostCategoryName varchar(100) not null
 );
 select * from Hamsell.PostCategory;

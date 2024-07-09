@@ -1,5 +1,5 @@
 create table Hamsell.Post(
-	PostID integer primary key,
+	PostID integer AUTO_INCREMENT primary key,
     BusinessID integer references Business,
     UserId integer references User,
     CityID integer not null references City,

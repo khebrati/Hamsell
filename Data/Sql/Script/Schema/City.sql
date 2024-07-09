@@ -1,5 +1,5 @@
 create table Hamsell.City(
-CityID integer primary key,
+CityID integer AUTO_INCREMENT primary key,
 ProvinceID integer not null references Province,
 CityName varchar(100)
 );

@@ -1,58 +1,40 @@
-using System;
-using System.Collections.Generic;
+using Hamsell.Data;
 using Hamsell.Models;
-using static Hamsell.Models.User;
 using MySql.Data.MySqlClient;
 
-namespace Hamsell.Data.Repositories.User
+namespace Hamsell.Data.Repositories.User;
+public class UserRepository
 {
-    public class UserRepository
+    private readonly DbContext _context;
+
+    public UserRepository(DbContext context)
     {
-        private readonly DbContext _context;
+        _context = context;
+    }
 
-        public UserRepository(DbContext context)
-        {
-            _context = context;
-        }
+    public void AddAccount(Account account)
+    {
+        string query =
+            $"INSERT INTO Account (FirstName, LastName, EmailAddress, PhoneNumber) VALUES ({account.FirstName}, {account.LastName}, {account.EmailAddress}, {account.PhoneNumber})";
+        var cmd = new MySqlCommand(query, _context.Connection);
+        cmd.ExecuteNonQuery();
+    }
 
-        public void GetUser(int id)
-        {
-            string query = "SELECT * FROM User";
-            var cmd = new MySqlCommand(query, _context.Connection);
-            var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                var acountId = reader.GetInt32(0);
-                var cityId = reader.GetInt32(1);
-                var userStatusId = reader.GetInt32(2);
-                Console.WriteLine(acountId + "," + cityId + "," + userStatusId);
-            }
+    public int GetLastInsertedAccountId()
+    {
+        string query = "SELECT LAST_INSERT_ID()";
+        var cmd = new MySqlCommand(query, _context.Connection);
+        return Convert.ToInt32(cmd.ExecuteScalar());
+    }
 
-            _context.Close();
-        }
-
-        public IEnumerable<Models.User> GetAllUsers()
-        {
-            // Implement method to fetch all users
-            throw new NotImplementedException();
-        }
-
-        public void AddUser(Models.User user)
-        {
-            // Implement method to add a new user
-            throw new NotImplementedException();
-        }
-
-        public void UpdateUser(Models.User user)
-        {
-            // Implement method to update an existing user
-            throw new NotImplementedException();
-        }
-
-        public void DeleteUser(int id)
-        {
-            // Implement method to delete a user by id
-            throw new NotImplementedException();
-        }
+    public void AddUser(Models.User user)
+    {
+        string query =
+            "INSERT INTO User (AccountId, CityId, UserStatusId) VALUES (@AccountId, @CityId, @UserStatusId)";
+        var cmd = new MySqlCommand(query, _context.Connection);
+        cmd.Parameters.AddWithValue("@AccountId", user.AccountId);
+        cmd.Parameters.AddWithValue("@CityId", user.CityId);
+        cmd.Parameters.AddWithValue("@UserStatusId", user.UserStatusId);
+        cmd.ExecuteNonQuery();
     }
 }

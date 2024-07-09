@@ -1,5 +1,5 @@
 create table Hamsell.Moderation(
-ModerationID integer primary key,
+ModerationID integer AUTO_INCREMENT primary key,
 Note varchar(100),
 CreationDate datetime not null
 );

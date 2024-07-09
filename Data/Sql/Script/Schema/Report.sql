@@ -1,6 +1,6 @@
 
 create table Hamsell.Report(
-	ReportID integer primary key,
+	ReportID integer AUTO_INCREMENT primary key,
     PostID integer references Post,
     UserId integer references User,
     ReportTypeId integer references ReportType,

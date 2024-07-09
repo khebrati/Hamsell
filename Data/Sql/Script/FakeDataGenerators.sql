@@ -1,6 +1,6 @@
 use hamsell;
 -- fake data inserters
-INSERT INTO Hamsell.Account (AcountId, FirstName, LastName, CreationDate, PhoneNumber, EmailAddress)
+INSERT INTO Hamsell.Account (AccountId, FirstName, LastName, CreationDate, PhoneNumber, EmailAddress)
 VALUES (1, 'John', 'Doe', '2022-01-01', '1234567890', 'john.doe@example.com'),
        (2, 'Jane', 'Doe', '2022-01-02', '0987654321', 'jane.doe@example.com'),
        (3, 'Jim', 'Doe', '2022-01-03', '1122334455', 'jim.doe@example.com'),
@@ -11,12 +11,14 @@ VALUES (1, 'John', 'Doe', '2022-01-01', '1234567890', 'john.doe@example.com'),
        (8, 'Admin', 'Three', '2022-01-08', '3334445555', 'admin.three@example.com'),
        (9, 'Admin', 'Four', '2022-01-09', '4445556666', 'admin.four@example.com'),
        (10, 'Admin', 'Five', '2022-01-10', '5556667777', 'admin.five@example.com');
+INSERT INTO hamsell.account (FirstName, LastName, CreationDate, PhoneNumber, EmailAddress)
+VALUES ('Johhny', 'doe', '2022-03-01', '1234567890', 'johnycage@gmail.com');
 
 INSERT INTO Hamsell.UserStatus(UserStatusId,UserStatusValue) VALUES
 (1,'Enabled'),
 (2,'Disabled');
 
-INSERT INTO Hamsell.User (AcountID, CityID, UserStatusId)
+INSERT INTO Hamsell.User (AccountID, CityID, UserStatusId)
 VALUES (1, 1, 1),
        (2, 2, 1),
        (3, 3, 1),
@@ -218,7 +220,7 @@ where PostId != 1 AND PostId != 3 AND PostId != 5 AND PostId != 7 AND PostId != 
 -- join ReportModerationResult on ReportModeration.ReportModerationResultId = ReportModerationResult.ReportModerationResultId
 -- where ReportModerationResult.ReportModerationResultValue = "DisableUser";
 update User set
-UserStatusId = 2 where User.AcountId = 3;
+UserStatusId = 2 where User.AccountID = 3;
 
 
 -- updating posts that their report says post must be disabled

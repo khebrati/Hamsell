@@ -1,4 +1,4 @@
 create table Hamsell.OsModel(
-OsModelId integer primary key,
+OsModelId integer AUTO_INCREMENT primary key,
 OsModelName varchar(100) not null
 );

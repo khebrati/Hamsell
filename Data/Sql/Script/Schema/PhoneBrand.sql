@@ -1,4 +1,4 @@
 create table Hamsell.PhoneBrand(
-PhoneBrandId integer primary key,
+PhoneBrandId integer AUTO_INCREMENT primary key,
 PhoneBrandName varchar(100) not null
 );

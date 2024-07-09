@@ -12,21 +12,21 @@ public class UserController : Controller
     private readonly DbContext _context;
     private readonly UserRepository _userRepository;
 
-    public UserController(ILogger<HomeController> logger,DbContext context,UserRepository userRepository)
+    public UserController(ILogger<HomeController> logger,UserRepository userRepository)
     {
         _logger = logger;
-        _context = context;
         _userRepository = userRepository;
     }
     public IActionResult SignUp()
     {
+        // _userRepository.GetUser(1);
         return View();
     }
     
     [HttpPost]
     public async Task<IActionResult> SignUp(SignUpViewModel model)
     {
-        _userRepository.GetUser(1);
+        
         // if (ModelState.IsValid)
         // {
         //     var existingAccount = await _context.Accounts

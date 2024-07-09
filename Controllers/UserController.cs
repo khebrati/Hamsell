@@ -57,7 +57,7 @@ public class UserController : Controller
             {
                 ModelState.AddModelError("", "An error occurred while processing your request.");
                 _logger.LogError(ex,"Error occurred while processing request");
-                ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again.";
+                ViewBag.ErrorMessage = $"An error occurred while processing your request. Error says: {ex.Message}";
             }
         }
         

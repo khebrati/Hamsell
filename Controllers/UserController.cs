@@ -1,4 +1,6 @@
 using Hamsell.Data;
+using Hamsell.Data.Repositories.User;
+using Hamsell.Models;
 using Hamsell.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +10,13 @@ public class UserController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly DbContext _context;
+    private readonly UserRepository _userRepository;
 
-    public UserController(ILogger<HomeController> logger,DbContext context)
+    public UserController(ILogger<HomeController> logger,DbContext context,UserRepository userRepository)
     {
         _logger = logger;
         _context = context;
+        _userRepository = userRepository;
     }
     public IActionResult SignUp()
     {
@@ -22,6 +26,7 @@ public class UserController : Controller
     [HttpPost]
     public async Task<IActionResult> SignUp(SignUpViewModel model)
     {
+        _userRepository.GetUser(1);
         // if (ModelState.IsValid)
         // {
         //     var existingAccount = await _context.Accounts

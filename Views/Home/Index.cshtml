@@ -4,14 +4,32 @@
 
 <div class="container mt-5">
     <div class="row">
-        <!-- Project Information Card -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Hamsell Marketplace</h5>
-                    <img src="https://securityintelligence.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2015/06/Online-Shopping-Security-Issues.jpg.webp" class="card-img-top" alt="Marketplace">
+                    <img src="https://securityintelligence.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2015/06/Online-Shopping-Security-Issues.jpg.webp" class="card-img-top img-fluid w-50" alt="Marketplace">
                     <p class="card-text">Hamsell is an online marketplace that empowers individuals to buy and sell a wide range of products. From vintage items to the latest gadgets, Hamsell provides a platform for users to easily upload posts about their products, set prices, and connect with buyers. Our mission is to make online trading accessible and secure for everyone, fostering a community where users can find anything they need or sell items they no longer use.</p>
                     <a href="#" class="btn btn-primary">Explore Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create a New Post</h5>
+                    <img src="https://cdn-icons-png.freepik.com/512/4106/4106426.png" class="card-img-top img-fluid w-50" alt="Create Post">
+                    <p class="card-text">Have something to sell? Create a new post to reach potential buyers.</p>
+                    @if (Context.Session.GetString("UserEmail") != null)
+                    {
+                        <a class="btn btn-primary">Create Post</a>
+                        @* <a href="@Url.Action("Create", "Post")" class="btn btn-primary">Create Post</a> *@
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("SignUp", "User")" class="btn btn-primary">Sign Up to Create Post</a>
+                    }
                 </div>
             </div>
         </div>

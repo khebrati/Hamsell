@@ -1,4 +1,4 @@
-namespace Hamsell.Models;
+namespace Hamsell.ViewModels;
 
 public class ErrorViewModel
 {

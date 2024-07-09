@@ -1,7 +1,20 @@
+using Hamsell.Data;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<DbContext>(serviceProvider =>
+{
+    var configuration = serviceProvider.GetService<IConfiguration>();
+    var server = configuration["Database:Server"];
+    var databaseName = configuration["Database:DatabaseName"];
+    var userName = configuration["Database:UserName"];
+    var password = configuration["Database:Password"];
+
+    return new DbContext(server, databaseName, userName, password);
+});
 
 var app = builder.Build();
 
@@ -9,7 +22,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

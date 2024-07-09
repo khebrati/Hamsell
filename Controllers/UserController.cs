@@ -12,60 +12,55 @@ public class UserController : Controller
     private readonly DbContext _context;
     private readonly UserRepository _userRepository;
 
-    public UserController(ILogger<HomeController> logger,UserRepository userRepository)
+    public UserController(ILogger<HomeController> logger, UserRepository userRepository)
     {
         _logger = logger;
         _userRepository = userRepository;
     }
+
     public IActionResult SignUp()
     {
         // _userRepository.GetUser(1);
         return View();
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> SignUp(SignUpViewModel model)
     {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                var account = new Account
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    EmailAddress = model.EmailAddress,
+                    PhoneNumber = model.PhoneNumber
+                };
+
+                _userRepository.AddAccount(account);
+
+                int accountId = _userRepository.GetLastInsertedAccountId();
+
+                var user = new User
+                {
+                    AccountId = accountId,
+                    UserStatusId = 1 //Enabled
+                };
+
+                _userRepository.AddUser(user);
+                
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while processing your request.");
+                _logger.LogError(ex,"Error occurred while processing request");
+                ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again.";
+            }
+        }
         
-        // if (ModelState.IsValid)
-        // {
-        //     var existingAccount = await _context.Accounts
-        //         .FirstOrDefaultAsync(a => a.EmailAddress == model.EmailAddress);
-        //     if (existingAccount != null)
-        //     {
-        //         ModelState.AddModelError("EmailAddress", "Email already in use.");
-        //         return View(model);
-        //     }
-        //
-        //     var account = new Account
-        //     {
-        //         FirstName = model.FirstName,
-        //         LastName = model.LastName,
-        //         EmailAddress = model.EmailAddress,
-        //         PhoneNumber = model.PhoneNumber,
-        //         CreationDate = DateTime.UtcNow
-        //     };
-        //
-        //     _context.Accounts.Add(account);
-        //     await _context.SaveChangesAsync();
-        //
-        //     // Assuming automatic AccountId assignment upon saving
-        //     var user = new User
-        //     {
-        //         AccountId = account.AccountId,
-        //         // Additional properties like CityId and UserStatusId can be set here if needed
-        //     };
-        //
-        //     _context.Users.Add(user);
-        //     await _context.SaveChangesAsync();
-        //
-        //     // Implement any sign-in logic here
-        //
-        //     return RedirectToAction("Index", "Home"); // Redirect to a different action/view as appropriate
-        // }
-        //
-        // // If we got this far, something failed, redisplay form
-        // return View(model);
         return View(model);
     }
 }

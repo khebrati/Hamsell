@@ -15,7 +15,7 @@ public class UserRepository
     public void AddAccount(Account account)
     {
         string query =
-            $"INSERT INTO Account (FirstName, LastName, EmailAddress, PhoneNumber) VALUES ({account.FirstName}, {account.LastName}, {account.EmailAddress}, {account.PhoneNumber})";
+            $"INSERT INTO Account (FirstName, LastName, EmailAddress, PhoneNumber,CreationDate) VALUES (\"{account.FirstName}\",\"{account.LastName}\",\"{account.EmailAddress}\",\"{account.PhoneNumber}\",\"{DateTime.Now:yyyy-MM-dd HH:mm:ss}\")";
         var cmd = new MySqlCommand(query, _context.Connection);
         cmd.ExecuteNonQuery();
     }
@@ -26,7 +26,7 @@ public class UserRepository
         var cmd = new MySqlCommand(query, _context.Connection);
         return Convert.ToInt32(cmd.ExecuteScalar());
     }
-
+    
     public void AddUser(Models.User user)
     {
         string query =
